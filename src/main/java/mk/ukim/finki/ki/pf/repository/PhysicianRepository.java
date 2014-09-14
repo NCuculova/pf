@@ -16,8 +16,8 @@ public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 			+ " JOIN diagnoses as d ON d.id = sd.diagnose_id"
 			+ " JOIN diagnose_symptoms as ds ON d.id = ds.diagnose_id"
 			+ " JOIN symptoms as ss ON ds.symptom_id = ss.id"
-			+ " WHERE ss.name = ?1")
-	public List<Physician> search1(String symptom1);
+			+ " WHERE ss.id = ?1")
+	public List<Physician> search1(Long id);
 	
 	@Query(nativeQuery = true, value = "SELECT distinct(p.id), p.date, p.firstName, p.lastName, p.gender, p.location FROM physicians as p"
 			+ " JOIN physician_specialties as ps ON p.id = ps.physician_id"
@@ -26,8 +26,8 @@ public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 			+ " JOIN diagnoses as d ON d.id = sd.diagnose_id"
 			+ " JOIN diagnose_symptoms as ds ON d.id = ds.diagnose_id"
 			+ " JOIN symptoms as ss ON ds.symptom_id = ss.id"
-			+ " WHERE ss.name = ?1 OR ss.name = ?2")
-	public List<Physician> search2(String symptom1, String symptom2);
+			+ " WHERE ss.id = ?1 OR ss.id = ?2")
+	public List<Physician> search2(Long id1, Long id2);
 	
 	@Query(nativeQuery = true, value = "SELECT distinct(p.id), p.date, p.firstName, p.lastName, p.gender, p.location FROM physicians as p"
 			+ " JOIN physician_specialties as ps ON p.id = ps.physician_id"
@@ -36,8 +36,8 @@ public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 			+ " JOIN diagnoses as d ON d.id = sd.diagnose_id"
 			+ " JOIN diagnose_symptoms as ds ON d.id = ds.diagnose_id"
 			+ " JOIN symptoms as ss ON ds.symptom_id = ss.id"
-			+ " WHERE ss.name = ?1 OR ss.name = ?2 OR ss.name = ?3")
-	public List<Physician> search3(String symptom1, String symptom2, String symptom3);
+			+ " WHERE ss.id = ?1 OR ss.id = ?2 OR ss.id = ?3")
+	public List<Physician> search3(Long id1, Long id2, Long id3);
 	
 	@Query(nativeQuery = true, value = "SELECT distinct(p.id), p.date, p.firstName, p.lastName, p.gender, p.location FROM physicians as p"
 			+ " JOIN physician_specialties as ps ON p.id = ps.physician_id"
@@ -46,8 +46,8 @@ public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 			+ " JOIN diagnoses as d ON d.id = sd.diagnose_id"
 			+ " JOIN diagnose_symptoms as ds ON d.id = ds.diagnose_id"
 			+ " JOIN symptoms as ss ON ds.symptom_id = ss.id"
-			+ " WHERE ss.name = ?1 OR ss.name = ?2 OR ss.name = ?3 OR ss.name = ?4")
-	public List<Physician> search4(String symptom1, String symptom2, String symptom3, String symptom4);
+			+ " WHERE ss.id = ?1 OR ss.id = ?2 OR ss.id = ?3 OR ss.id = ?4")
+	public List<Physician> search4(Long id1, Long id2, Long id3, Long id4);
 	
 	@Query(nativeQuery = true, value = "SELECT distinct(p.id), p.date, p.firstName, p.lastName, p.gender, p.location FROM physicians as p"
 			+ " JOIN physician_specialties as ps ON p.id = ps.physician_id"
@@ -56,7 +56,7 @@ public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 			+ " JOIN diagnoses as d ON d.id = sd.diagnose_id"
 			+ " JOIN diagnose_symptoms as ds ON d.id = ds.diagnose_id"
 			+ " JOIN symptoms as ss ON ds.symptom_id = ss.id"
-			+ " WHERE ss.name = ?1 OR ss.name = ?2 OR ss.name = ?3 OR ss.name = ?4 OR ss.name = ?5")
-	public List<Physician> search5(String symptom1, String symptom2, String symptom3, String symptom4, String symptom5);
+			+ " WHERE ss.id = ?1 OR ss.id = ?2 OR ss.id = ?3 OR ss.id = ?4 OR ss.id = ?5")
+	public List<Physician> search5(Long id1, Long id2, Long id3, Long id4, Long id5);
 	
 }

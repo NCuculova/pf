@@ -10,7 +10,6 @@ PF.factory('Search', ['$resource', function($resource) {
   return $resource(PFUtil.ctx('/data/rest/search/:id'), {}, {
     'search': {
       method: 'GET',
-      isArray: true,
       url: PFUtil.ctx('/data/rest/search/:keywords')
     }
   });
@@ -20,3 +19,12 @@ PF.factory('Symptom', ['$resource', function($resource) {
 	  return $resource(PFUtil.ctx('/data/rest/symptom/:id'), {}, {
 	  });
 	}]);
+
+PF.filter('years', function() {
+    return function(date) {
+    	date = new Date(date);
+    	var currDate = new Date();
+		var year = currDate.getFullYear();
+		return (year - date.getFullYear()) + " years";
+    };
+  });

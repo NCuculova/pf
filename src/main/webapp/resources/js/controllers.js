@@ -13,19 +13,16 @@ PF.controller('SearchController', [
 				console.log($scope.keywords);
 				var query = "";
 				$.each($scope.keywords, function() {
-					query = query + this.text + " ";
+					query = query + this.id + ",";
 				});
 				
 				$scope.results = Search.search({
 					keywords : query
 				});
-				
-				/*$scope.specialties = Search.getPhysicianSpecialties({
-					
-				});*/
 			};
 			var symptoms = Symptom.query();
 
+			
 			$scope.options = {
 				query : function(query) {
 					var data = {

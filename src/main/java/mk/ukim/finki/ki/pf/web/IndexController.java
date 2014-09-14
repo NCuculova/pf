@@ -1,8 +1,6 @@
 package mk.ukim.finki.ki.pf.web;
 
-import java.util.List;
-
-import mk.ukim.finki.ki.pf.model.Physician;
+import mk.ukim.finki.ki.pf.model.SearchResults;
 import mk.ukim.finki.ki.pf.service.PhysicianFinderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +26,9 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(@RequestParam("keywords") String keywords) {
+	public ModelAndView search(@RequestParam("keywords") Long... keywords) {
 		System.out.println("KEYWORDS: " + keywords);
-		List<Physician> physicians = service.search(keywords);
-		System.out.println(physicians);
+		SearchResults results = service.search(keywords);
 		ModelAndView result = new ModelAndView("index");
 		return result;
 	}

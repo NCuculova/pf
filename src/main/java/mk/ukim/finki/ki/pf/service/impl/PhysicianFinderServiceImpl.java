@@ -5,14 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import mk.ukim.finki.ki.pf.model.Diagnose;
 import mk.ukim.finki.ki.pf.model.DiagnoseSymptom;
 import mk.ukim.finki.ki.pf.model.Physician;
 import mk.ukim.finki.ki.pf.model.PhysicianSpecialty;
 import mk.ukim.finki.ki.pf.model.PhysicianUniversity;
+import mk.ukim.finki.ki.pf.model.SearchResults;
 import mk.ukim.finki.ki.pf.model.Specialty;
 import mk.ukim.finki.ki.pf.model.SpecialtyDiagnose;
 import mk.ukim.finki.ki.pf.model.Symptom;
@@ -27,6 +25,9 @@ import mk.ukim.finki.ki.pf.repository.SpecialtyRepository;
 import mk.ukim.finki.ki.pf.repository.SymptomRepository;
 import mk.ukim.finki.ki.pf.repository.UniversityRepository;
 import mk.ukim.finki.ki.pf.service.PhysicianFinderService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PhysicianFinderServiceImpl implements PhysicianFinderService {
@@ -170,21 +171,35 @@ public class PhysicianFinderServiceImpl implements PhysicianFinderService {
 	}
 
 	@Override
-	public List<Physician> search(String... symptoms) {
+	public SearchResults search(Long... symptoms) {
+		SearchResults results = new SearchResults();
 		if (symptoms.length == 1) {
-			return physicianRepository.search1(symptoms[0]);
+			results.setPhysicians(physicianRepository.search1(symptoms[0]));
+			results.setDiagnosis(diagnoseRepository
+					.searchDiagnose1(symptoms[0]));
 		} else if (symptoms.length == 2) {
-			return physicianRepository.search2(symptoms[0], symptoms[1]);
+			results.setPhysicians(physicianRepository.search2(symptoms[0],
+					symptoms[1]));
+			results.setDiagnosis(diagnoseRepository.searchDiagnose2(
+					symptoms[0], symptoms[1]));
 		} else if (symptoms.length == 3) {
-			return physicianRepository.search3(symptoms[0], symptoms[1],
-					symptoms[2]);
+			results.setPhysicians(physicianRepository.search3(symptoms[0],
+					symptoms[1], symptoms[2]));
+			results.setDiagnosis(diagnoseRepository.searchDiagnose3(
+					symptoms[0], symptoms[1], symptoms[2]));
 		} else if (symptoms.length == 4) {
-			return physicianRepository.search4(symptoms[0], symptoms[1],
-					symptoms[2], symptoms[3]);
+			results.setPhysicians(physicianRepository.search4(symptoms[0],
+					symptoms[1], symptoms[2], symptoms[3]));
+			results.setDiagnosis(diagnoseRepository.searchDiagnose4(
+					symptoms[0], symptoms[1], symptoms[2], symptoms[3]));
 		} else {
-			return physicianRepository.search5(symptoms[0], symptoms[1],
-					symptoms[2], symptoms[3], symptoms[4]);
+			results.setPhysicians(physicianRepository.search5(symptoms[0],
+					symptoms[1], symptoms[2], symptoms[3], symptoms[4]));
+			results.setDiagnosis(diagnoseRepository.searchDiagnose5(
+					symptoms[0], symptoms[1], symptoms[2], symptoms[3],
+					symptoms[4]));
 		}
+		return results;
 	}
 
 	@Override

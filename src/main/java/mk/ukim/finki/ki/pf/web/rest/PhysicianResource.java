@@ -2,7 +2,7 @@ package mk.ukim.finki.ki.pf.web.rest;
 
 import java.util.List;
 
-import mk.ukim.finki.ki.pf.model.Physician;
+import mk.ukim.finki.ki.pf.model.SearchResults;
 import mk.ukim.finki.ki.pf.model.Symptom;
 import mk.ukim.finki.ki.pf.service.PhysicianFinderService;
 
@@ -20,12 +20,9 @@ public class PhysicianResource {
 	PhysicianFinderService service;
 	
 	@RequestMapping(value="/search/{keywords}",method = RequestMethod.GET, produces = "application/json")
-	public List<Physician> search(@PathVariable String keywords) {
-		String[] parts = keywords.trim().replace(",", " ").split("\\s+");
-		for(int i = 0; i < parts.length; ++i) {
-			System.out.println(parts[i]);
-		}
-		return service.search(parts);
+	public SearchResults search(@PathVariable Long... keywords) {
+		//String[] parts = keywords.trim().replace(",", " ").split("\\s+");
+		return service.search(keywords);
 	}
 	
 	@RequestMapping(value="/symptom",method = RequestMethod.GET, produces = "application/json")

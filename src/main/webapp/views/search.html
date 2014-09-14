@@ -1,11 +1,10 @@
 <div class="page-header">
 	<h1>Find a physician</h1>
 </div>
-<div class="row">
-	<div class="col-md-8">
-		<form class="form-horizontal" role="form" name="inputForm"
-			ng-submit="search()" novalidate>
-			<!-- <div class="form-group">
+<div class="col-md-12">
+	<form class="form-horizontal" role="form" name="inputForm"
+		ng-submit="search()" novalidate>
+		<!-- <div class="form-group">
 				<label class="control-label col-md-2">Gender </label>
 				<div class="btn-group col-md-10" ng-model="gender" bs-radio-group>
 					<label class="btn btn-default"><input type="radio"
@@ -21,43 +20,53 @@
 						placeholder="Enter the name of your town" ng-model="location">
 				</div>
 			</div> -->
-			<div class=" form-group">
-				<label class="col-md-2 control-label">Symptoms/signs of
-					disease </label>
-				<div class="col-md-10">
-					<div ui-select2="options" class="form-select" ng-model="keywords"
-						style="width: 100%" data-placeholder="Enter any symptoms"></div>
-				</div>
+		<div class=" form-group">
+			<label class="col-md-3 control-label">Symptoms/signs of
+				disease </label>
+			<div class="col-md-9">
+				<div ui-select2="options" class="form-select" ng-model="keywords"
+					style="width: 100%" data-placeholder="Enter any symptoms"></div>
 			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-info"
-						ng-disabled="!inputForm.$valid">Search</button>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="col-md-12" ng-show="results.length > 0">
-		<h2>Total found: {{ results.length }}</h2>
-		<div class="physician" ng-repeat="r in results ">
-			<ul>
-				<li>
-					<h3>{{ r.firstName }} {{ r.lastName }}</h3>
-					<div class="row">
-						<div class="col-md-4">
-							<label>Experiance</label>
-							<p>{{r.date}}</p>
-						</div>
-						<div class="col-md-4">
-							<label>Specialty</label>
-							<p>{{r.date}}</p>
-						</div>
-						<div class="col-md-4">
-							<label>Experiance</label>
-							<p >{{r.date}}</p>
-						</div>
-					</div>
-				</li>
-			</ul>
 		</div>
-	</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-9">
+				<button type="submit" class="btn btn-info"
+					ng-disabled="!inputForm.$valid">Search</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" ng-show="results.diagnosis.length > 0">
+				<h3>Possible diagnoses: {{results.diagnosis.length}}</h3>
+				<div>
+					<ul>
+						<li ng-repeat="d in results.diagnosis"><h4>{{d.name}}</h4></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-8" ng-show=" results.physicians.length > 0">
+				<h3>Total found: {{ results.physicians.length }}</h3>
+				<div class="physician" ng-repeat="r in results.physicians ">
+					<ul>
+						<li class="styleLi">
+							<h4>{{ r.firstName }} {{ r.lastName }}</h4>
+							<div class="row">
+								<div class="col-md-2">
+									<label>Experience</label>
+									<p>{{r.date | years}}</p>
+								</div>
+								<div class="col-md-7">
+									<label style="display: block;">Specialty</label>
+									<span ng-repeat="s in r.specialties track by $index">{{s}} </span>
+								</div>
+								<div class="col-md-3">
+									<label>Universities</label>
+									<p ng-repeat="u in r.universities">{{u}}</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
