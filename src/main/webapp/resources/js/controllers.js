@@ -10,16 +10,22 @@ PF.controller('SearchController', [
 		'Symptom',
 		function($scope, Search, Symptom) {
 			$scope.search = function() {
-				console.log($scope.keywords);
 				var query = "";
 				$.each($scope.keywords, function() {
 					query = query + this.id + ",";
 				});
-				
-				$scope.results = Search.search({
-					keywords : query
-				});
+				query = query.substring(0, query.length - 1);
+				if($scope.specific) {
+					$scope.results = Search.specificSearch({
+						keywords : query
+					});
+				} else {
+					$scope.results = Search.search({
+						keywords : query
+					});
+				}
 			};
+			
 			var symptoms = Symptom.query();
 
 			
@@ -43,5 +49,10 @@ PF.controller('SearchController', [
 				},
 				multiple : true
 			};
+			
+			$scope.clearGender = function() {
+				delete $scope.gender;
+			};
+			
 
 		} ]);

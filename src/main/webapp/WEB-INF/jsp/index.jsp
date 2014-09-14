@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#/"><b>Physician Finder</b></a>
+          <a class="navbar-brand" href="#/"><i class="fa fa-fw fa-user-md"></i> <b>Physician Finder</b></a>
         </div>
         <div class="navbar-collapse collapse">
 		

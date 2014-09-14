@@ -2,7 +2,10 @@ package mk.ukim.finki.ki.pf.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import mk.ukim.finki.ki.pf.model.Diagnose;
@@ -203,7 +206,71 @@ public class PhysicianFinderServiceImpl implements PhysicianFinderService {
 	}
 
 	@Override
+	public SearchResults searchAll(Long... symptoms) {
+		SearchResults results = new SearchResults();
+		Map<Long, Physician> res1 = new HashMap<Long, Physician>();
+		Map<Long, Diagnose> res2 = new HashMap<Long, Diagnose>();
+		for (int i = 0; i < symptoms.length; ++i) {
+			List<Physician> result1 = physicianRepository.search1(symptoms[i]);
+			List<Diagnose> result2 = diagnoseRepository
+					.searchDiagnose1(symptoms[i]);
+			for (Physician p : result1) {
+				res1.put(p.getId(), p);
+			}
+			for (Diagnose d : result2) {
+				res2.put(d.getId(), d);
+			}
+		}
+		results.setPhysicians(new ArrayList<Physician>(res1.values()));
+		results.setDiagnosis(new ArrayList<Diagnose>(res2.values()));
+		return results;
+	}
+
+	@Override
 	public List<Symptom> getSymptoms() {
 		return sRespository.findAll();
+	}
+
+	@Override
+	public SearchResults specificSearch(Long... symptoms) {
+		SearchResults results = new SearchResults();
+		Map<Long, Physician> res1 = new HashMap<Long, Physician>();
+		Map<Long, Diagnose> res2 = new HashMap<Long, Diagnose>();
+		Map<Long, Integer> physicians = new HashMap<Long, Integer>();
+		Map<Long, Integer> diagnosis = new HashMap<Long, Integer>();
+		for (int i = 0; i < symptoms.length; ++i) {
+			List<Physician> result1 = physicianRepository.search1(symptoms[i]);
+			List<Diagnose> result2 = diagnoseRepository
+					.searchDiagnose1(symptoms[i]);
+			for (Physician p : result1) {
+				Integer count = physicians.get(p.getId());
+				if (count == null) {
+					count = 0;
+				}
+				count++;
+				physicians.put(p.getId(), count);
+				res1.put(p.getId(), p);
+			}
+			for (Diagnose d : result2) {
+				Integer count = diagnosis.get(d.getId());
+				if (count == null) {
+					count = 0;
+				}
+				count++;
+				diagnosis.put(d.getId(), count);
+				res2.put(d.getId(), d);
+			}
+		}
+		for (Entry<Long, Integer> entry : physicians.entrySet()) {
+			if (entry.getValue() == symptoms.length) {
+				results.getPhysicians().add(res1.get(entry.getKey()));
+			}
+		}
+		for (Entry<Long, Integer> entry : diagnosis.entrySet()) {
+			if (entry.getValue() == symptoms.length) {
+				results.getDiagnosis().add(res2.get(entry.getKey()));
+			}
+		}
+		return results;
 	}
 }

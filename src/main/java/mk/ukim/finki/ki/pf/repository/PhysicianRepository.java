@@ -58,5 +58,4 @@ public interface PhysicianRepository extends JpaRepository<Physician, Long> {
 			+ " JOIN symptoms as ss ON ds.symptom_id = ss.id"
 			+ " WHERE ss.id = ?1 OR ss.id = ?2 OR ss.id = ?3 OR ss.id = ?4 OR ss.id = ?5")
 	public List<Physician> search5(Long id1, Long id2, Long id3, Long id4, Long id5);
-	
 }

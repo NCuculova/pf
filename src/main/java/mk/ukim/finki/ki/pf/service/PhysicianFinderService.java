@@ -13,4 +13,8 @@ public interface PhysicianFinderService {
 	public SearchResults search(Long... symptoms);
 	
 	public List<Symptom> getSymptoms();
+
+	public SearchResults specificSearch(Long... keywords);
+
+	SearchResults searchAll(Long[] symptoms);
 }

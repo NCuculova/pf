@@ -15,17 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/data/rest")
 public class PhysicianResource {
-	
+
 	@Autowired
 	PhysicianFinderService service;
-	
-	@RequestMapping(value="/search/{keywords}",method = RequestMethod.GET, produces = "application/json")
+
+	@RequestMapping(value = "/search/{keywords}", method = RequestMethod.GET, produces = "application/json")
 	public SearchResults search(@PathVariable Long... keywords) {
-		//String[] parts = keywords.trim().replace(",", " ").split("\\s+");
-		return service.search(keywords);
+		return service.searchAll(keywords);
 	}
-	
-	@RequestMapping(value="/symptom",method = RequestMethod.GET, produces = "application/json")
+
+	@RequestMapping(value = "/specificSearch/{keywords}", method = RequestMethod.GET, produces = "application/json")
+	public SearchResults specificSearch(@PathVariable Long... keywords) {
+		return service.specificSearch(keywords);
+	}
+
+	@RequestMapping(value = "/symptom", method = RequestMethod.GET, produces = "application/json")
 	public List<Symptom> get() {
 		return service.getSymptoms();
 	}

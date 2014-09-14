@@ -1,8 +1,15 @@
 package mk.ukim.finki.ki.pf.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResults {
+	
+	public SearchResults() {
+		physicians = new ArrayList<Physician>();
+		diagnosis = new ArrayList<Diagnose>();
+	}
+	
 	private List<Physician> physicians;
 
 	private List<Diagnose> diagnosis;
